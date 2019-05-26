@@ -124,6 +124,9 @@
                         var prevBallY = ballY - ballSpeedY;
                         var prevBrickCol = Math.floor(prevBallX / BRICK_W);
                         var prevBrickRow = Math.floor(prevBallY / BRICK_H);
+
+                        var bothTestsFailed = true;
+
                         // if the column changed, bounce horizontally
                         if (prevBrickCol != ballBrickCol) {
                             var adjBrickSide = rowColToArrayIndex(
@@ -132,6 +135,7 @@
                             );
                             if (brickGrid[adjBrickSide] == false) {
                                 ballSpeedX *= -1;
+                                bothTestsFailed = false;
                             }
                         }
                         if (prevBrickRow != ballBrickRow) {
@@ -141,7 +145,16 @@
                             );
                             if (brickGrid[adjBrickTopBot] == false) {
                                 ballSpeedY *= -1;
+                                bothTestsFailed = false;
                             }
+                        }
+
+                        // if bothTestsFailed is true still, we've hit an armpit case
+                        // flip speed on both axes
+                        if (bothTestsFailed) {
+                            // we could also now remove adjacent topbottom
+                            ballSpeedX *= -1;
+                            ballSpeedY *= -1;
                         }
                     }
                 }
