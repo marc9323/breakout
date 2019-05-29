@@ -106,7 +106,7 @@
                     ballBrickRow
                 );
 
-                // check for valid column and row
+                // check for valid column and row, avoid the edge wrap collision bug
                 if (
                     ballBrickCol >= 0 &&
                     ballBrickCol < BRICK_COLS &&
@@ -115,6 +115,7 @@
                 ) {
                     // a collision has already happened and
                     // its a valid col/row so check if brick exists(is true)
+                    // otherwise it bounces thru empty space
                     if (brickGrid[brickIndexUnderBall]) {
                         // this is where we have hit a brick
                         // remove brick and reverse y speed, bounce
@@ -171,8 +172,6 @@
                     ballX > paddleLeftEdgeX && // right of the left side of paddle
                     ballX < paddleRightEdgeX
                 ) {
-                    // left of the left side of paddle
-
                     ballSpeedY *= -1;
 
                     var centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
@@ -218,6 +217,7 @@
 
                 colorCircle(ballX, ballY, 10, 'white'); // draw ball
 
+                // draw paddle
                 colorRect(
                     paddleX,
                     canvas.height - PADDLE_DIST_FROM_EDGE,
