@@ -87,6 +87,7 @@
                 ballX += ballSpeedX;
                 ballY += ballSpeedY;
 
+                // only flip speed if ball not already making its way back to playfield
                 if (ballX < 0 && ballSpeedX < 0.0) {
                     //left
                     ballSpeedX *= -1;
